@@ -18,6 +18,12 @@ class ProjectController extends Controller
         return view('user.project.index', compact('projects'));
     }
 
+    public function dashboard()
+    {
+        $projects = Project::all();
+        return view('user.project.dashboard', compact('projects'));
+    }
+
     /**
      * Form tambah project baru
      */
@@ -47,13 +53,13 @@ class ProjectController extends Controller
             'join_code'   => Str::random(8), // kode unik untuk join project
         ]);
 
-        // otomatis owner masuk ke pivot table  
+        // otomatis owner masuk ke pivot table
         $project->users()->attach(Auth::id(), [
             'role' => 'owner',
             'joined_at' => now(),
         ]);
 
-        return redirect()->route('projects.index')->with('success', 'Project berhasil dibuat.');
+        return redirect()->route('projects.dashboard')->with('success', 'Project berhasil dibuat.');
     }
 
     /**
@@ -66,7 +72,7 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return view('projects.show', compact('project'));
+        return view('user.project.index', compact('project'));
     }
 
     /**
@@ -133,7 +139,7 @@ class ProjectController extends Controller
 
         // cek apakah user sudah join
         if ($project->users->contains(Auth::id())) {
-            return redirect()->route('projects.index')->with('info', 'Kamu sudah join project ini.');
+            return redirect()->route('projects.dashboard')->with('info', 'Kamu sudah join project ini.');
         }
 
         $project->users()->attach(Auth::id(), [

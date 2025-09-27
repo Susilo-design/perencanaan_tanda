@@ -1,129 +1,112 @@
-@extends('layout.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Project</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Scrollbar kustom gelap */
+    ::-webkit-scrollbar{width:8px;height:8px}
+    ::-webkit-scrollbar-track{background:#1A1E21}
+    ::-webkit-scrollbar-thumb{background:#414548;border-radius:4px}
+    ::-webkit-scrollbar-thumb:hover{background:#292d30}
+  </style>
+</head>
+<body class="bg-[#1A1E21] text-[#FFFFFF] min-h-screen">
 
-<body class="bg-[#1A1E21] text-[#e0e0e0]">
-    @section('style')
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-20 bg-[#1A1E21]/80 backdrop-blur border-b border-[#292d30]">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button class="text-[#e0e0e0] hover:text-[#2ECC71] transition">&larr; Back</button>
+      <div class="flex items-center gap-3">
+        <button class="px-3 py-1.5 rounded-lg text-sm bg-[#292d30] hover:bg-[#414548] transition">Edit</button>
+        <button class="px-3 py-1.5 rounded-lg text-sm bg-[#004079] text-[#3498DB] hover:bg-[#3498DB] hover:text-white transition">Delete</button>
+      </div>
+    </div>
+  </header>
 
-    @endsection
+  <main class="max-w-5xl mx-auto px-6 py-8 grid gap-8">
 
-    @section('content')
-        <!-- ========== KONTEN UTAMA ========== -->
-        <main class="max-w-7xl mx-auto px-4 py-8">
-            <!-- Sambutan -->
-            <div class="flex justify-between items-center   ">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-white mb-2">Halo, <span class="text-[#2ECC71]">John!</span></h1>
-                    <p class="text-gray-400">Berikut project & jadwal kamu hari ini</p>
-                </div>
-                <div>
-                    <a class="group relative inline-block text-sm font-medium text-black focus:ring-3 focus:outline-hidden"
-                        href="{{ route('projects.create') }}">
-                        <span
-                            class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-
-                        <span class="relative block border border-current bg-white px-8 py-3"> Create Project </span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Stats (statis) -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <!-- Card 1 -->
-                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#2ECC71] transition">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-400 text-sm">Project Aktif</p>
-                            <p class="text-2xl font-bold text-white mt-1">3</p>
-                        </div>
-                        <div class="w-10 h-10 bg-[#2ECC71]/20 rounded-lg grid place-items-center">
-                            <svg class="w-5 h-5 text-[#2ECC71]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#3498DB] transition">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-400 text-sm">Task Hari Ini</p>
-                            <p class="text-2xl font-bold text-white mt-1">12</p>
-                        </div>
-                        <div class="w-10 h-10 bg-[#3498DB]/20 rounded-lg grid place-items-center">
-                            <svg class="w-5 h-5 text-[#3498DB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#00ae56] transition">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-400 text-sm">Selesai Bulan Ini</p>
-                            <p class="text-2xl font-bold text-white mt-1">8</p>
-                        </div>
-                        <div class="w-10 h-10 bg-[#00ae56]/20 rounded-lg grid place-items-center">
-                            <svg class="w-5 h-5 text-[#00ae56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#006a18] transition">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-400 text-sm">Total Project</p>
-                            <p class="text-2xl font-bold text-white mt-1">15</p>
-                        </div>
-                        <div class="w-10 h-10 bg-[#006a18]/20 rounded-lg grid place-items-center">
-                            <svg class="w-5 h-5 text-[#006a18]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project cards dan jadwal lanjut seperti kode asli... -->
-        </main>
-
-        <!-- Modal Join with Code -->
-        <div id="modalJoin" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
-            <div class="bg-[#292d30] rounded-2xl p-6 w-full max-w-md border border-[#414548]">
-                <h3 class="text-xl font-bold text-white mb-2">Gabung Project via Kode</h3>
-                <p class="text-gray-400 text-sm mb-4">Masukkan 6-digit kode yang diberikan ketua project.</p>
-                <form id="formJoin" action="#" method="POST">
-                    <input type="text" name="code" placeholder="contoh: ABC123" maxlength="6" required
-                        class="w-full px-4 py-3 bg-[#414548] text-white placeholder-gray-400 rounded-lg border-2 border-transparent focus:border-[#3498DB] focus:bg-[#292d30] focus:outline-none transition mb-4">
-                    <div class="flex space-x-3">
-                        <button type="submit"
-                            class="flex-1 bg-[#2ECC71] hover:bg-[#00ae56] text-white py-2.5 rounded-lg font-medium transition">Gabung</button>
-                        <button type="button" id="btnCancelJoin"
-                            class="flex-1 bg-[#414548] hover:bg-[#292d30] text-gray-300 py-2.5 rounded-lg font-medium transition">Batal</button>
-                    </div>
-                </form>
-            </div>
+    <!-- Project Header -->
+    <section class="bg-[#292d30] rounded-xl p-6 border border-[#414548]">
+      <div class="flex items-start justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-[#2ECC71]">Project Alpha</h1>
+          <p class="text-[#e0e0e0] mt-2 max-w-2xl">
+            Pengembangan sistem manajemen inventaris berbasis web untuk meningkatkan efisiensi pergudangan.
+          </p>
         </div>
-    @endsection
+        <span class="px-4 py-2 rounded-full text-sm font-medium
+                     bg-[#006a18] text-[#2ECC71] border border-[#2ECC71]">
+          On Progress
+        </span>
+      </div>
+
+      <!-- Meta row -->
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div>
+          <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Start</h3>
+          <p class="text-white mt-1">28 Sep 2025</p>
+        </div>
+        <div>
+          <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Deadline</h3>
+          <p class="text-white mt-1">15 Dec 2025</p>
+        </div>
+        <div>
+          <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Priority</h3>
+          <p class="text-white mt-1">High</p>
+        </div>
+        <div>
+          <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Owner</h3>
+          <p class="text-white mt-1">Tim DevOps</p>
+        </div>
+      </div>
+    </section>
 
 
+    <!-- Task List -->
+    <section class="bg-[#292d30] rounded-xl p-6 border border-[#414548]">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold text-[#2ECC71]">Tasks</h2>
+        <button class="px-3 py-1.5 rounded-lg text-sm bg-[#006a18] hover:bg-[#00ae56] transition">+ Add Task</button>
+      </div>
 
-    @push('scripts')
-        <script>
-            // Toggle modal Join with Code
-            const modal = document.getElementById('modalJoin');
-            document.getElementById('btnJoinCode').addEventListener('click', () => modal.classList.remove('hidden'));
-            document.getElementById('btnCancelJoin').addEventListener('click', () => modal.classList.add('hidden'));
-        </script>
-    @endpush
-    <script></script>
+      <ul class="space-y-3">
+        <li class="flex items-center justify-between p-3 rounded-lg bg-[#1A1E21] border border-[#414548]">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="w-4 h-4 rounded bg-[#292d30] border-[#414548] text-[#2ECC71] focus:ring-0"/>
+            <span class="text-white">Setup repositori & CI/CD</span>
+          </div>
+          <span class="text-xs text-[#e0e0e0]">Selesai</span>
+        </li>
+        <li class="flex items-center justify-between p-3 rounded-lg bg-[#1A1E21] border border-[#414548]">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" checked class="w-4 h-4 rounded bg-[#292d30] border-[#414548] text-[#2ECC71] focus:ring-0"/>
+            <span class="text-[#e0e0e0] line-through">Membuat database schema</span>
+          </div>
+          <span class="text-xs text-[#e0e0e0]">Selesai</span>
+        </li>
+        <li class="flex items-center justify-between p-3 rounded-lg bg-[#1A1E21] border border-[#414548]">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="w-4 h-4 rounded bg-[#292d30] border-[#414548] text-[#2ECC71] focus:ring-0"/>
+            <span class="text-white">Implementasi API</span>
+          </div>
+          <span class="text-xs text-[#e0e0e0]">50%</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Action Buttons -->
+    <section class="flex flex-wrap gap-3">
+      <button class="px-5 py-2 rounded-lg bg-[#00ae56] hover:bg-[#2ECC71] text-white font-medium transition">
+        Mark as Complete
+      </button>
+      <button class="px-5 py-2 rounded-lg bg-[#292d30] hover:bg-[#414548] text-[#e0e0e0] font-medium transition border border-[#414548]">
+        Archive Project
+      </button>
+    </section>
+
+  </main>
 </body>
-
 </html>

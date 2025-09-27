@@ -24,6 +24,7 @@ Route::middleware('auth')->prefix('projects')->name('projects.')->group(function
 
     // Index - list semua project user login
     Route::get('/', [ProjectController::class, 'index'])->name('index');
+    Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard');
     // Create - form buat project baru
     Route::get('/create', [ProjectController::class, 'create'])->name('create');
     // Store - simpan project baru
