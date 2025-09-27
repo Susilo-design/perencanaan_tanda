@@ -12,6 +12,12 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    // Relasi: 1 User punya banyak Project
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,4 +51,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    
 }
