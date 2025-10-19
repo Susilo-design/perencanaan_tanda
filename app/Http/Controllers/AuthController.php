@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    public function profile(){
+        $users = User::all();
+        return view('user.profile',compact('users'));
+    }
+
+
+
     // Register User
     public function register(Request $request)
     {
@@ -28,7 +36,7 @@ class AuthController extends Controller
         // langsung login setelah register
         Auth::login($user);
 
-        return redirect()->route('projects.index')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil!');
     }
 
     // Login User
@@ -42,33 +50,23 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-
-            return redirect()->route('projects.index')->with('success', 'Login sukses!');
+            return redirect()->route('user.dashboard')->with('success', 'Login sukses!');
         }
 
-        return response()->json([
-            'message' => 'Email atau password salah',
-        ], 401);
+        return back()->withErrors([
+            'email' => 'Email atau password salah',
+        ])->onlyInput('email');
     }
 
     // Logout User
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json([
-            'message' => 'Logout sukses',
-        ]);
+        return redirect('/login')->with('success', 'Logout sukses');
     }
 
-    public function index()
-    {
 
-        $project = Project::all();
-
-        return view('user.dashboard', compact('project'));
-    }
 }

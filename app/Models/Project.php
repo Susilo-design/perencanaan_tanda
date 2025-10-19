@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    
+
 
     protected $fillable = [
         'owner_id',
@@ -18,6 +18,7 @@ class Project extends Model
         'start_date',
         'end_date',
         'join_code',
+        'status',
     ];
 
     // Relasi: project dimiliki oleh 1 user (owner)
@@ -31,5 +32,27 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class, 'project_user')
             ->withPivot('role', 'joined_at');
+    }
+
+    // Relasi: project punya banyak project_user
+    public function projectUsers()
+    {
+        return $this->hasMany(ProjectUser::class);
+    }
+
+    // Helper: generate join code
+    public function generateJoinCode()
+    {
+        do {
+            $code = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
+        } while (self::where('join_code', $code)->exists());
+
+        return $code;
+    }
+
+    // Relasi: project punya banyak tasks
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

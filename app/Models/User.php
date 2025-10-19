@@ -15,7 +15,20 @@ class User extends Authenticatable
     // Relasi: 1 User punya banyak Project
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'owner_id');
+    }
+
+    // Relasi: user bisa join banyak project
+    public function joinedProjects()
+    {
+        return $this->belongsToMany(Project::class, 'project_user')
+            ->withPivot('role', 'joined_at');
+    }
+
+    // Relasi: user punya banyak project_user
+    public function projectUsers()
+    {
+        return $this->hasMany(ProjectUser::class);
     }
 
     /**
@@ -53,5 +66,5 @@ class User extends Authenticatable
     }
 
 
-    
+
 }

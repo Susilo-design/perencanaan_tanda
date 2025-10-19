@@ -39,7 +39,7 @@
                                     <label for="email" class="block text-white text-base font-medium mb-3">
                                         Email
                                     </label>
-                                    <input type="email" id="email" name="email" placeholder="Email" value=""
+                                    <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}"
                                         class="w-full px-0 py-3 text-gray-600 placeholder-gray-400 bg-transparent border-0 border-b border-gray-300 focus:border-gray-500 focus:outline-none focus:ring-0 transition-colors duration-200"
                                         required autocomplete="username">
                                     @error('email')

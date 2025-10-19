@@ -11,12 +11,12 @@
                 <p class="text-gray-400">Isi detail project untuk memulai kolaborasi tim</p>
             </div>
 
-            <a href="/home" class="text-gray-400 hover:text-white transition">← Kembali</a>
+            <a href="{{ route('user.dashboard') }}" class="text-gray-400 hover:text-white transition">← Kembali</a>
         </div>
 
         <!-- Form Create Project -->
         <div class="bg-[#292d30] rounded-xl p-8 border border-[#414548]">
-            <form action="{{ route('projects.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('user.project.store') }}" method="POST" class="space-y-6">
                 @csrf
 
                 <!-- Project Name -->
@@ -58,7 +58,7 @@
                         <option value="low">Rendah</option>
                         <option value="medium">Sedang</option>
                         <option value="high">Tinggi</option>
-                        <option value="urgent">Segera</option>
+                        <option value=x "urgent">Segera</option>
                     </select>
                 </div>
 
@@ -79,7 +79,7 @@
                 <div>
                     <label for="join_code" class="block text-sm font-medium text-white mb-2">Kode Bergabung</label>
                     <div class="flex space-x-3">
-                        <input type="text" name="join_code" id="join_code" readonly value="ABC123"
+                        <input type="text" name="join_code" id="join_code" readonly value=""
                             class="flex-1 px-4 py-3 bg-[#414548] text-white rounded-lg border-2 border-[#414548] focus:outline-none">
                         <button type="button" onclick="generateCode()"
                             class="px-6 py-3 bg-[#3498DB] hover:bg-[#004079] text-white rounded-lg font-medium transition">
@@ -105,19 +105,14 @@
     </main>
 @endsection
 
-@push('script')
-    <script>
-        function generateCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById('join_code').value = code;
-        }
-    </script>
-@endpush
+<script>
+function generateCode() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    document.getElementById('join_code').value = result;
+}
+</script>
 
-</body>
-
-</html>

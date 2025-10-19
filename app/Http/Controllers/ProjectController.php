@@ -14,14 +14,14 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Auth::user()->projects()->get();
         return view('user.project.index', compact('projects'));
     }
 
     public function dashboard()
     {
-        $projects = Project::all();
-        return view('user.project.dashboard', compact('projects'));
+        $projects = Auth::user()->projects()->with('tasks')->get();
+        return view('user.dashboard', compact('projects'));
     }
 
     /**
@@ -44,14 +44,16 @@ class ProjectController extends Controller
             'end_date'    => 'nullable|date|after_or_equal:start_date',
         ]);
 
-        $project = Project::create([
+        $project = new Project([
             'owner_id'    => Auth::id(),
             'title'       => $request->title,
             'description' => $request->description,
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
-            'join_code'   => Str::random(8), // kode unik untuk join project
         ]);
+
+        $project->join_code = $request->join_code ?: $project->generateJoinCode();
+        $project->save();
 
         // otomatis owner masuk ke pivot table
         $project->users()->attach(Auth::id(), [
@@ -59,7 +61,7 @@ class ProjectController extends Controller
             'joined_at' => now(),
         ]);
 
-        return redirect()->route('projects.dashboard')->with('success', 'Project berhasil dibuat.');
+        return redirect()->route('user.dashboard')->with('success', 'Project berhasil dibuat.');
     }
 
     /**
@@ -72,6 +74,7 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        $project->load('tasks');
         return view('user.project.index', compact('project'));
     }
 
@@ -84,7 +87,7 @@ class ProjectController extends Controller
             abort(403, 'Hanya owner yang bisa edit project');
         }
 
-        return view('projects.edit', compact('project'));
+        return view('user.project.edit', compact('project'));
     }
 
     /**
@@ -94,6 +97,11 @@ class ProjectController extends Controller
     {
         if ($project->owner_id !== Auth::id()) {
             abort(403, 'Hanya owner yang bisa update project');
+        }
+
+        if ($request->has('status') && $request->status === 'completed') {
+            $project->update(['status' => 'completed']);
+            return redirect()->route('user.project.show', $project)->with('success', 'Project marked as completed.');
         }
 
         $request->validate([
@@ -110,7 +118,7 @@ class ProjectController extends Controller
             'end_date'    => $request->end_date,
         ]);
 
-        return redirect()->route('projects.show', $project)->with('success', 'Project berhasil diupdate.');
+        return redirect()->route('user.project.show', $project)->with('success', 'Project berhasil diupdate.');
     }
 
     /**
@@ -127,6 +135,14 @@ class ProjectController extends Controller
     }
 
     /**
+     * Form join project
+     */
+    public function joinForm()
+    {
+        return view('user.project.join');
+    }
+
+    /**
      * Join project pakai join_code
      */
     public function join(Request $request)
@@ -139,7 +155,7 @@ class ProjectController extends Controller
 
         // cek apakah user sudah join
         if ($project->users->contains(Auth::id())) {
-            return redirect()->route('projects.dashboard')->with('info', 'Kamu sudah join project ini.');
+            return redirect()->route('user.dashboard')->with('info', 'Kamu sudah join project ini.');
         }
 
         $project->users()->attach(Auth::id(), [
@@ -147,6 +163,6 @@ class ProjectController extends Controller
             'joined_at' => now(),
         ]);
 
-        return redirect()->route('projects.show', $project)->with('success', 'Berhasil join project.');
+        return redirect()->route('user.project.show', $project)->with('success', 'Berhasil join project.');
     }
 }
