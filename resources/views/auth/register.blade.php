@@ -1,10 +1,10 @@
 @extends('layout.app')
 
 @section('content')
-    <section>
+    <section class="bg-white">
         <div class="flex justify-center items-center h-[100vh] gap-5">
             <div class="mx-auto w-[100%] basis-210 h-full">
-                <img class="w-[100%] h-[100%]" src="{{ asset('images/') }}" alt="">
+                <img class="w-[100%] h-[100%] object-cover" src="{{ asset('images/Logo No B.png') }}" alt="">
             </div>
             <div class="bg-[#ECECEC] basis-140 h-[100dvh]">
                 <div class="min-h-screen flex flex-col">

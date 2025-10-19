@@ -6,7 +6,7 @@
         <div class="flex justify-center items-center h-[100%] gap-5  ">
             <!-- Left image -->
             <div class="mx-auto w-[100%] basis-210 h-full bg-[#1A1E21] text-[#e0e0e0]">
-                <img class="w-[100%] h-[100%]" src="{{ asset('images/Logo') }}" alt="">
+                <img class="w-[100%] h-[100%] object-cover" src="{{ asset('images/Logo No B.png') }}" alt="">
             </div>
 
             <!-- Right form -->

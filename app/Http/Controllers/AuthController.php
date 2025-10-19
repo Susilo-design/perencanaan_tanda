@@ -11,12 +11,38 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
-    public function profile(){
+    public function profile()
+    {
         $users = User::all();
-        return view('user.profile',compact('users'));
+        return view('user.profile.index', compact('users'));
     }
 
+    public function editProfile()
+    {
+        return view('user.profile.edit');
+    }
 
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'avatar' => 'nullable|mimes:jpg,jpeg,png,svg,webp|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $namaFile = uniqid() . "-avatar" . $avatar->getClientOriginalExtension();
+            $path = $avatar->storeAs("avatar", $namaFile, "public");
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'Profile berhasil diupdate');
+    }
 
     // Register User
     public function register(Request $request)
@@ -67,6 +93,4 @@ class AuthController extends Controller
 
         return redirect('/login')->with('success', 'Logout sukses');
     }
-
-
 }
