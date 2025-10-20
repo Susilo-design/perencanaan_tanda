@@ -18,7 +18,14 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $tasks = $project->tasks()->get();
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            $tasks = $project->tasks()->where('assigned_to', Auth::id())->get();
+        } else {
+            $tasks = $project->tasks()->get();
+        }
+
         return view('tasks.index', compact('project', 'tasks'));
     }
 
@@ -29,6 +36,12 @@ class TaskController extends Controller
     {
         if (!$project->users->contains(Auth::id())) {
             abort(403, 'Unauthorized');
+        }
+
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            abort(403, 'Members cannot create tasks.');
         }
 
         return view('tasks.create', compact('project'));
@@ -43,12 +56,19 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            abort(403, 'Members cannot create tasks.');
+        }
+
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status'      => 'nullable|in:todo,in_progress,done',
+            'status'      => 'nullable|in:pending,in_progress,done',
             'priority'    => 'nullable|in:low,medium,high',
             'due_date'    => 'nullable|date',
+            'assigned_to' => 'nullable|exists:users,id',
         ]);
 
         $project->tasks()->create($request->all());
@@ -65,6 +85,12 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member' && $task->assigned_to !== Auth::id()) {
+            abort(403, 'Members can only view their own tasks.');
+        }
+
         return view('tasks.show', compact('project', 'task'));
     }
 
@@ -75,6 +101,12 @@ class TaskController extends Controller
     {
         if (!$project->users->contains(Auth::id())) {
             abort(403, 'Unauthorized');
+        }
+
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            abort(403, 'Members cannot edit tasks.');
         }
 
         return view('tasks.edit', compact('project', 'task'));
@@ -89,15 +121,26 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status'      => 'nullable|in:todo,in_progress,done',
-            'priority'    => 'nullable|in:low,medium,high',
-            'due_date'    => 'nullable|date',
-        ]);
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
 
-        $task->update($request->all());
+        if ($userRole === 'member') {
+            // Members can only update status to 'done'
+            $request->validate([
+                'status' => 'required|in:done',
+            ]);
+            $task->update(['status' => $request->status]);
+        } else {
+            // Hosts can update all fields
+            $request->validate([
+                'title'       => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'status'      => 'nullable|in:pending,in_progress,done',
+                'priority'    => 'nullable|in:low,medium,high',
+                'due_date'    => 'nullable|date',
+                'assigned_to' => 'nullable|exists:users,id',
+            ]);
+            $task->update($request->all());
+        }
 
         return redirect()->route('user.project.tasks.index', $project)->with('success', 'Task berhasil diupdate.');
     }
@@ -111,8 +154,21 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $task->status = $task->status === 'done' ? 'todo' : 'done';
-        $task->save();
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            // Members can only mark as done
+            if ($task->assigned_to === Auth::id() && $task->status !== 'done') {
+                $task->status = 'done';
+                $task->save();
+            } else {
+                abort(403, 'Members can only mark their own tasks as done.');
+            }
+        } else {
+            // Hosts can toggle status
+            $task->status = $task->status === 'done' ? 'pending' : 'done';
+            $task->save();
+        }
 
         return response()->json(['status' => $task->status]);
     }
@@ -124,6 +180,12 @@ class TaskController extends Controller
     {
         if (!$project->users->contains(Auth::id())) {
             abort(403, 'Unauthorized');
+        }
+
+        $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
+
+        if ($userRole === 'member') {
+            abort(403, 'Members cannot delete tasks.');
         }
 
         $task->delete();

@@ -14,13 +14,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Auth::user()->projects()->get();
+        $projects = Auth::user()->joinedProjects()->with('tasks')->get();
         return view('user.project.index', compact('projects'));
     }
 
     public function dashboard()
     {
-        $projects = Auth::user()->projects()->with('tasks')->get();
+        $projects = Auth::user()->joinedProjects()->with('tasks')->get();
         return view('user.dashboard', compact('projects'));
     }
 
@@ -45,21 +45,32 @@ class ProjectController extends Controller
         ]);
 
         $project = new Project([
-            'owner_id'    => Auth::id(),
+            'host_id'     => Auth::id(),
             'title'       => $request->title,
             'description' => $request->description,
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
+            'join_code'   => strtoupper(Str::random(8)),
         ]);
 
-        $project->join_code = $request->join_code ?: $project->generateJoinCode();
         $project->save();
 
-        // otomatis owner masuk ke pivot table
+        // tambahkan host ke tabel project_user dengan role_in_project = 'host'
         $project->users()->attach(Auth::id(), [
-            'role' => 'owner',
+            'role_in_project' => 'host',
             'joined_at' => now(),
         ]);
+
+        // Create default schedule based on project dates
+        if ($request->start_date && $request->end_date) {
+            $project->schedules()->create([
+                'title' => 'Project Timeline',
+                'description' => 'Default schedule for project timeline',
+                'start_time' => $request->start_date . ' 09:00:00',
+                'end_time' => $request->end_date . ' 17:00:00',
+                'priority' => 'medium',
+            ]);
+        }
 
         return redirect()->route('user.dashboard')->with('success', 'Project berhasil dibuat.');
     }
@@ -148,18 +159,22 @@ class ProjectController extends Controller
     public function join(Request $request)
     {
         $request->validate([
-            'join_code' => 'required|string|exists:projects,join_code',
+            'join_code' => 'required|string',
         ]);
 
         $project = Project::where('join_code', $request->join_code)->first();
 
+        if (!$project) {
+            return redirect()->back()->withErrors(['join_code' => 'Kode tidak valid.']);
+        }
+
         // cek apakah user sudah join
         if ($project->users->contains(Auth::id())) {
-            return redirect()->route('user.dashboard')->with('info', 'Kamu sudah join project ini.');
+            return redirect()->back()->withErrors(['join_code' => 'Kamu sudah join project ini.']);
         }
 
         $project->users()->attach(Auth::id(), [
-            'role' => 'collaborator',
+            'role_in_project' => 'member',
             'joined_at' => now(),
         ]);
 

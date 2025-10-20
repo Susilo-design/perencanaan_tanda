@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JoinController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
@@ -33,10 +35,12 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 
+    Route::get('/schedules', [ScheduleController::class, 'userSchedules'])->name('schedules.index');
+
 
     // Join Project - join pakai join_code
     Route::get('/join', [ProjectController::class, 'joinForm'])->name('joinForm');
-    Route::post('/join', [ProjectController::class, 'join'])->name('join');
+    Route::post('/join', [JoinController::class, 'join'])->name('join');
 
     Route::prefix('project')->name('project.')->group(function () {
         // Index - list semua project user login
@@ -71,5 +75,7 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
             Route::patch('/{task}/toggle', [TaskController::class, 'toggleStatus'])->name('toggle');
             Route::delete('/{task}', [TaskController::class, 'destroy'])->name('destroy');
         });
+
+
     });
 });

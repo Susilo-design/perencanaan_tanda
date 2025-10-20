@@ -23,6 +23,11 @@
         </div>
 
         <div class="flex flex-wrap gap-4 mb-10">
+            <a href="{{ route('user.dashboard') }}"
+                class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                Dashboard
+            </a>
+
             <a href="{{ route('user.profile.edit') }}"
                 class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                 Edit Profile
@@ -56,4 +61,5 @@
         </div>
     </div>
 </body>
+
 </html>

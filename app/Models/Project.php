@@ -12,7 +12,7 @@ class Project extends Model
 
 
     protected $fillable = [
-        'owner_id',
+        'host_id',
         'title',
         'description',
         'start_date',
@@ -21,17 +21,23 @@ class Project extends Model
         'status',
     ];
 
-    // Relasi: project dimiliki oleh 1 user (owner)
+    // Relasi: project dimiliki oleh 1 user (host)
+    public function host()
+    {
+        return $this->belongsTo(User::class, 'host_id');
+    }
+
+    // Alias for backward compatibility
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->host();
     }
 
     // Relasi: project bisa punya banyak user yang join
     public function users()
     {
         return $this->belongsToMany(User::class, 'project_user')
-            ->withPivot('role', 'joined_at');
+            ->withPivot('role_in_project', 'joined_at');
     }
 
     // Relasi: project punya banyak project_user
@@ -55,4 +61,12 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    // Relasi: project punya banyak schedules
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+
 }

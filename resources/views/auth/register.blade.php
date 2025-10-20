@@ -1,24 +1,16 @@
 @extends('layout.app')
 
 @section('content')
-    <section class="bg-white">
+    <section class="bg-white h-full">
         <div class="flex justify-center items-center h-[100vh] gap-5">
-            <div class="mx-auto w-[100%] basis-210 h-full">
-                <img class="w-[100%] h-[100%] object-cover" src="{{ asset('images/Logo No B.png') }}" alt="">
+            <div class="mx-auto w-[100%] object-cover basis-210 h-full">
+                <img class="w-full h-full  object-cover" src="{{ asset('images/Logo No B.png') }}" alt="">
             </div>
             <div class="bg-[#ECECEC] basis-140 h-[100dvh]">
                 <div class="min-h-screen flex flex-col">
-                    <div class="px-4 py-3">
-                        <a href="{{ url()->previous() }}" class="inline-flex items-center">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
                     <div class="flex-1 bg-gray-100 px-6 py-12">
                         <div class="max-w-md mx-auto">
-                            <h1 class="text-3xl font-normal text-gray-800 text-center mb-12">Register</h1>
+                            <h1 class="text-3xl font-normal text-gray-800 text-center mb-2">Register</h1>
                             <form method="POST" action="{{ route('register') }}"
                                 class="space-y-8">
                                 @csrf

@@ -14,27 +14,35 @@
 
 <body class="bg-[#1A1E21] text-[#e0e0e0]">
 
-@auth
-    <nav class="bg-green-800 text-white shadow-md">
+    @auth
+        <nav class="bg-green-800 text-white shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
 
                     <!-- Logo -->
                     <div class="flex-shrink-0">
-                        <a href="" class="text-xl font-bold ">Tanda</a>
+                        <a href="{{ route('user.dashboard') }}" class="text-xl font-bold ">Tanda</a>
                     </div>
 
                     <!-- Nav Links & Profile -->
                     <div class="flex items-center space-x-6">
                         @auth
+
+                            <a href="{{ route('user.dashboard') }}"
+                                class=" hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                                Dashboard
+                            </a>
+
+
                             <!-- Schedule Button -->
-                            <a href=""
+                            <a href="{{ route('user.schedules.index') }}"
                                 class=" hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                                 Schedule
                             </a>
 
+
                             <!-- Projects Button -->
-                            <a href=""
+                            <a href="{{ route('user.project.index') }}"
                                 class=" hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                                 Projects
                             </a>
@@ -43,8 +51,8 @@
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open"
                                     class="flex items-center space-x-2 text-sm font-medium  hover:text-indigo-600 focus:outline-none">
-                                    <img class="h-8 w-8 rounded-full object-cover"
-                                        src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) }}"
+                                    <img class="h-10 w-10 rounded-full object-cover shadow-lg"
+                                        src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&size=128' }}"
                                         alt="Avatar">
                                     <span>{{ Auth::user()->name }}</span>
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,7 +80,7 @@
                 </div>
             </div>
         </nav>
-@endauth
+    @endauth
 
 
 
