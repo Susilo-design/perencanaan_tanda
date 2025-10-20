@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.index', compact('users'));
+    }
 
     public function profile()
     {
@@ -17,10 +22,6 @@ class AuthController extends Controller
         return view('user.profile.index', compact('users'));
     }
 
-    public function editProfile()
-    {
-        return view('user.profile.edit');
-    }
 
     public function updateProfile(Request $request)
     {
@@ -75,6 +76,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+
+            // Redirect based on role
+            if (Auth::user()->isAdmin()) {
+                return redirect()->route('admin.index')->with('success', 'Login sukses!');
+            }
 
             return redirect()->route('user.dashboard')->with('success', 'Login sukses!');
         }

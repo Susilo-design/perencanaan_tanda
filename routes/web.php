@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JoinController;
 use App\Http\Controllers\ProjectController;
@@ -75,7 +76,18 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
             Route::patch('/{task}/toggle', [TaskController::class, 'toggleStatus'])->name('toggle');
             Route::delete('/{task}', [TaskController::class, 'destroy'])->name('destroy');
         });
-
-
     });
+});
+
+Route::middleware('isAdmin')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/create', [AdminController::class, 'create'])->name('create');
+    Route::post('/', [AdminController::class, 'store'])->name('store');
+    Route::get('/{user}', [AdminController::class, 'show'])->name('show');
+    Route::get('/{user}/edit', [AdminController::class, 'edit'])->name('edit');
+    Route::put('/{user}', [AdminController::class, 'update'])->name('update');
+    Route::delete('/{user}', [AdminController::class, 'destroy'])->name('destroy');
+    Route::get('/trash', [AdminController::class, 'trash'])->name('trash');
+    Route::patch('/{id}/restore', [AdminController::class, 'restore'])->name('restore');
+    Route::delete('/{id}/force-delete', [AdminController::class, 'forceDelete'])->name('force-delete');
 });

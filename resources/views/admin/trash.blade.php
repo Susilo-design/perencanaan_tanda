@@ -1,19 +1,12 @@
 @extends('layout.app')
 
-
-
 @section('content')
     <section class="">
         <div class="mb-6 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">User Management</h1>
-            <div class="flex gap-3">
-                <a href="{{ route('admin.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    <i class="fa-solid fa-plus"></i> Add User
-                </a>
-                <a href="{{ route('admin.trash') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                    <i class="fa-solid fa-trash"></i> Recycle Bin
-                </a>
-            </div>
+            <h1 class="text-2xl font-bold">Recycle Bin - Deleted Users</h1>
+            <a href="{{ route('admin.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <i class="fa-solid fa-arrow-left"></i> Back to Users
+            </a>
         </div>
 
         @if(session('success'))
@@ -28,6 +21,7 @@
                     <tr class="border-b">
                         <th class="px-4 py-2">User</th>
                         <th class="px-4 py-2">Role</th>
+                        <th class="px-4 py-2">Deleted At</th>
                         <th class="px-4 py-2">Action</th>
                     </tr>
                 </thead>
@@ -60,27 +54,31 @@
                                 </span>
                             </td>
 
+                            <!-- Deleted At -->
+                            <td class="px-4 py-3">
+                                {{ $user->deleted_at->format('d M Y, H:i') }}
+                            </td>
+
                             <!-- Actions -->
                             <td class="px-4 py-3">
                                 <div class="flex flex-wrap sm:flex-nowrap justify-start gap-3">
-                                    <!-- View -->
-                                    <a href="{{ route('admin.show', $user) }}" class="text-blue-500 hover:text-blue-700">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
+                                    <!-- Restore -->
+                                    <form action="{{ route('admin.restore', $user->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="text-green-500 hover:text-green-700"
+                                            onclick="return confirm('Are you sure you want to restore this user?')">
+                                            <i class="fa-solid fa-undo"></i>
+                                        </button>
+                                    </form>
 
-                                    <!-- Edit -->
-                                    <a href="{{ route('admin.edit', $user) }}" class="text-green-500 hover:text-green-700">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </a>
-
-                                    <!-- Delete -->
-                                    <form action="{{ route('admin.destroy', $user) }}" method="POST"
-                                        id="deleteForm_{{ $user->id }}" class="inline">
+                                    <!-- Force Delete -->
+                                    <form action="{{ route('admin.force-delete', $user->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="text-red-500 hover:text-red-700 delete-user"
-                                            data-id="{{ $user->id }}">
-                                            <i class="fa-solid fa-trash"></i>
+                                        <button type="submit" class="text-red-500 hover:text-red-700"
+                                            onclick="return confirm('Are you sure you want to permanently delete this user? This action cannot be undone!')">
+                                            <i class="fa-solid fa-trash-alt"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -88,26 +86,13 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3" class="text-center py-6 text-gray-500">
-                                No users found
+                            <td colspan="4" class="text-center py-6 text-gray-500">
+                                No deleted users found
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.delete-user').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const userId = this.getAttribute('data-id');
-                        if (confirm('Are you sure you want to delete this user?')) {
-                            document.getElementById(`deleteForm_${userId}`).submit();
-                        }
-                    });
-                });
-            });
-        </script>
     </section>
 @endsection
