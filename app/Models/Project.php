@@ -9,8 +9,6 @@ class Project extends Model
 {
     use HasFactory;
 
-
-
     protected $fillable = [
         'host_id',
         'title',
@@ -33,11 +31,11 @@ class Project extends Model
         return $this->host();
     }
 
-    // Relasi: project bisa punya banyak user yang join
+    // Relasi: proyek bisa memiliki banyak pengguna yang bergabung untuk kolaborasi
     public function users()
     {
         return $this->belongsToMany(User::class, 'project_user')
-            ->withPivot('role_in_project', 'joined_at');
+            ->withPivot('role_in_project', 'joined_at'); // Mengambil kolom tambahan dari tabel pivot untuk role dan waktu bergabung
     }
 
     // Relasi: project punya banyak project_user
@@ -46,12 +44,12 @@ class Project extends Model
         return $this->hasMany(ProjectUser::class);
     }
 
-    // Helper: generate join code
+    // Helper: menghasilkan kode join unik untuk kolaborasi proyek
     public function generateJoinCode()
     {
         do {
-            $code = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6));
-        } while (self::where('join_code', $code)->exists());
+            $code = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 6)); // Buat kode 6 karakter huruf besar menggunakan MD5 dan uniqid
+        } while (self::where('join_code', $code)->exists()); // Pastikan kode belum ada di database untuk keunikan
 
         return $code;
     }
@@ -67,6 +65,4 @@ class Project extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-
-
 }

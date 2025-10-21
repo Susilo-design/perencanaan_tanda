@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <section class="">
+    <section class="px-10 py-20">
         <div class="mb-6 flex justify-between items-center">
             <h1 class="text-2xl font-bold">Recycle Bin - Deleted Users</h1>
             <a href="{{ route('admin.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

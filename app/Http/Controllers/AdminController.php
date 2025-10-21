@@ -92,7 +92,10 @@ class AdminController extends Controller
         $users = User::onlyTrashed()->get();
         return view('admin.trash', compact('users'));
     }
-    
+
+
+
+
 
     public function exportExcel()
     {

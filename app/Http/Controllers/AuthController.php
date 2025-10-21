@@ -22,6 +22,11 @@ class AuthController extends Controller
         return view('user.profile.index', compact('users'));
     }
 
+    public function editProfile()
+    {
+        return view('user.profile.edit');
+    }
+
 
     public function updateProfile(Request $request)
     {

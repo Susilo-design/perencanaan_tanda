@@ -3,7 +3,7 @@
 
 
 @section('content')
-    <section class="">
+    <section class="px-10 py-20">
         <div class="mb-6 flex justify-between items-center">
             <h1 class="text-2xl font-bold">User Management</h1>
             <div class="flex gap-3">
@@ -16,6 +16,7 @@
                 <a href="{{ route('export') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                      Export
                 </a>
+
             </div>
         </div>
 
@@ -36,7 +37,7 @@
                 </thead>
                 <tbody>
                     @forelse ($users as $user)
-                        <tr class="border-b hover:bg-gray-50 text-sm sm:text-base">
+                        <tr class="border-b hover:bg-gray-50 hover:text-black text-sm sm:text-base">
                             <!-- User Info -->
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">

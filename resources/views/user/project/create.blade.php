@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- Join Code (Auto Generated) -->
-                <div>
+                {{-- <div>
                     <label for="join_code" class="block text-sm font-medium text-white mb-2">Kode Bergabung</label>
                     <div class="flex space-x-3">
                         <input type="text" name="join_code" id="join_code" readonly value=""
@@ -87,7 +87,7 @@
                         </button>
                     </div>
                     <p class="text-gray-400 text-xs mt-2">Kode ini digunakan anggota tim untuk bergabung ke project</p>
-                </div>
+                </div> --}}
 
                 <!-- Action Buttons -->
                 <div class="flex justify-end space-x-4 pt-6">
@@ -105,7 +105,7 @@
     </main>
 @endsection
 
-<script>
+{{-- <script>
 function generateCode() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let result = '';
@@ -114,5 +114,5 @@ function generateCode() {
     }
     document.getElementById('join_code').value = result;
 }
-</script>
+</script> --}}
 

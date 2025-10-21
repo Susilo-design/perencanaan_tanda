@@ -47,23 +47,12 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::post('/join', [JoinController::class, 'join'])->name('join');
 
     Route::prefix('project')->name('project.')->group(function () {
-        // Index - list semua project user login
         Route::get('/', [ProjectController::class, 'index'])->name('index');
-        // Create - form buat project baru
         Route::get('/create', [ProjectController::class, 'create'])->name('create');
-        // Store - simpan project baru
         Route::post('/store', [ProjectController::class, 'store'])->name('store');
-
-        // Show - detail project tertentu
         Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
-
-        // Edit - form edit project
         Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('edit');
-
-        // Update - simpan perubahan project
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
-
-        // Destroy - hapus project
         Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
 
 
@@ -84,13 +73,13 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
 
 Route::middleware('isAdmin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/trash', [AdminController::class, 'trash'])->name('trash'); // <--- Pindahkan ke atas
     Route::get('/create', [AdminController::class, 'create'])->name('create');
     Route::post('/', [AdminController::class, 'store'])->name('store');
     Route::get('/{user}', [AdminController::class, 'show'])->name('show');
     Route::get('/{user}/edit', [AdminController::class, 'edit'])->name('edit');
     Route::put('/{user}', [AdminController::class, 'update'])->name('update');
     Route::delete('/{user}', [AdminController::class, 'destroy'])->name('destroy');
-    Route::get('/trash', [AdminController::class, 'trash'])->name('trash');
     Route::patch('/{id}/restore', [AdminController::class, 'restore'])->name('restore');
     Route::delete('/{id}/force-delete', [AdminController::class, 'forceDelete'])->name('force-delete');
 });

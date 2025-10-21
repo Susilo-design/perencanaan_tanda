@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <section class="">
+    <section class="px-10 py-20">
         <div class="max-w-2xl mx-auto">
             <h1 class="text-2xl font-bold mb-6">Edit User</h1>
 

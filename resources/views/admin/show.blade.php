@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <section class="">
+    <section class="px-10 py-20">
         <div class="max-w-2xl mx-auto">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">User Details</h1>

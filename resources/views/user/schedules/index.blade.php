@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 'color' => $schedule->color,
                 'extendedProps' => [
                     'description' => $schedule->description,
-                    'location' => $schedule->location,
                     'priority' => $schedule->priority,
                     'project' => $schedule->project->title,
                 ],
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Event: ' + info.event.title + '\n' +
                   'Project: ' + info.event.extendedProps.project + '\n' +
                   'Description: ' + (info.event.extendedProps.description || 'N/A') + '\n' +
-                  'Location: ' + (info.event.extendedProps.location || 'N/A') + '\n' +
                   'Priority: ' + info.event.extendedProps.priority);
         }
     });

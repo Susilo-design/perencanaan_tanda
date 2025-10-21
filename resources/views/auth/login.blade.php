@@ -27,7 +27,7 @@
                     <div class="flex-1 bg-[#1A1E21] text-[#e0e0e0]  px-6 py-12">
                         <div class="max-w-md mx-auto">
                             <!-- Login Title -->
-                            <h1 class="text-3xl font-normal text-gray-800 text-center mb-12">
+                            <h1 class="text-3xl font-normal text-white text-center mb-12">
                                 Login
                             </h1>
 

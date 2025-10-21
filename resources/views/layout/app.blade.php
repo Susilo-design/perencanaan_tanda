@@ -10,7 +10,9 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
     @stack('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="bg-[#1A1E21] text-[#e0e0e0]">
@@ -29,7 +31,13 @@
                     <div class="flex items-center space-x-6">
                         @auth
                             @if (Auth::check() && Auth::user()->role == 'admin')
-
+                                <form method="POST" action="{{ route('user.logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-2 text-sm  hover:bg-gray-100 hover:text-black">
+                                        Logout
+                                    </button>
+                                </form>
                             @else
                                 <a href="{{ route('user.dashboard') }}"
                                     class=" hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
@@ -68,11 +76,11 @@
                                     <div x-show="open" @click.away="open = false"
                                         class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 z-50">
                                         <a href="{{ route('user.profile') }}"
-                                            class="block px-4 py-2 text-sm  hover:bg-gray-100">Profile</a>
+                                            class="block px-4 py-2 text-sm  hover:bg-gray-100 hover:text-black">Profile</a>
                                         <form method="POST" action="{{ route('user.logout') }}">
                                             @csrf
                                             <button type="submit"
-                                                class="block w-full text-left px-4 py-2 text-sm  hover:bg-gray-100">
+                                                class="block w-full text-left px-4 py-2 text-sm  hover:bg-gray-100 hover:text-black">
                                                 Logout
                                             </button>
                                         </form>

@@ -16,10 +16,12 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403, 'Unauthorized');
-        }
+        if (Auth::check() && Auth::user()->role == 'admin') {
+            return $next($request);
+        } else {
+            //jika bukan admin, dikembalikan ke home
+            return redirect()->route('login.view');
 
-        return $next($request);
+        }
     }
 }
