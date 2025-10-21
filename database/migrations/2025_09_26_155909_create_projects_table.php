@@ -13,12 +13,12 @@ return new class extends Migration
 {
     Schema::create('projects', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('owner_id'); // pengganti id_name di diagram
+        $table->unsignedBigInteger('owner_id'); 
         $table->string('title');
         $table->text('description')->nullable();
         $table->date('start_date')->nullable();
         $table->date('end_date')->nullable();
-        $table->string('join_code')->unique(); // untuk fitur join pakai kode
+        $table->string('join_code')->unique();
         $table->timestamps();
 
         $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

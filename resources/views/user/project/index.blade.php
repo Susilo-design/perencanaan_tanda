@@ -3,7 +3,7 @@
 @section('title', isset($project) ? 'Detail Project' : 'Projects')
 
 @section('content')
-    @if(isset($project))
+    @if (isset($project))
         <!-- Detail Project View -->
         <main class="max-w-5xl mx-auto px-6 py-8 grid gap-8">
 
@@ -28,29 +28,30 @@
                     </span>
                 </div>
 
-                <!-- Meta row -->
-                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Start</h3>
-                        <p class="text-white mt-1">
-                            {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : 'Not set' }}
-                        </p>
+
+                    <!-- Meta row -->
+                    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Start</h3>
+                            <p class="text-white mt-1">
+                                {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : 'Not set' }}
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Deadline</h3>
+                            <p class="text-white mt-1">
+                                {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : 'Not set' }}
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Join Code</h3>
+                            <p class="text-white mt-1 font-mono">{{ $project->join_code }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Owner</h3>
+                            <p class="text-white mt-1">{{ $project->owner->name }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Deadline</h3>
-                        <p class="text-white mt-1">
-                            {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : 'Not set' }}
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Join Code</h3>
-                        <p class="text-white mt-1 font-mono">{{ $project->join_code }}</p>
-                    </div>
-                    <div>
-                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Owner</h3>
-                        <p class="text-white mt-1">{{ $project->owner->name }}</p>
-                    </div>
-                </div>
             </section>
 
 
@@ -66,7 +67,8 @@
                 @if ($project->tasks->count() > 0)
                     <ul class="space-y-3">
                         @foreach ($project->tasks as $task)
-                            <li class="flex items-center justify-between p-3 rounded-lg bg-[#1A1E21] border border-[#414548]">
+                            <li
+                                class="flex items-center justify-between p-3 rounded-lg bg-[#1A1E21] border border-[#414548]">
                                 <div class="flex items-center gap-3">
                                     <input type="checkbox" {{ $task->status === 'done' ? 'checked' : '' }}
                                         class="task-checkbox w-4 h-4 rounded bg-[#292d30] border-[#414548] text-[#2ECC71] focus:ring-0"
@@ -103,7 +105,7 @@
 
             <!-- Action Buttons -->
             <section class="flex flex-wrap gap-3">
-                @if ($project->owner_id === Auth::id())
+                @if ($project->host_id === Auth::id() && $project->status !== 'completed')
                     <form action="{{ route('user.project.update', $project) }}" method="POST" class="inline">
                         @csrf
                         @method('PUT')
@@ -171,7 +173,8 @@
                 @if ($projects->count() > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($projects as $project)
-                            <div class="bg-[#292d30] rounded-xl p-6 border border-[#414548] hover:border-[#2ECC71] transition">
+                            <div
+                                class="bg-[#292d30] rounded-xl p-6 border border-[#414548] hover:border-[#2ECC71] transition">
                                 <div class="flex items-start justify-between mb-4">
                                     <div>
                                         <h2 class="text-xl font-bold text-[#2ECC71]">{{ $project->title }}</h2>
@@ -186,7 +189,8 @@
                                                 ? 'bg-[#006a18] text-[#2ECC71] border-[#2ECC71]'
                                                 : 'bg-[#7D6608] text-[#F7DC6F] border-[#F7DC6F]';
                                     @endphp
-                                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $statusClass }} border">
+                                    <span
+                                        class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $statusClass }} border">
                                         {{ $statusLabel }}
                                     </span>
                                 </div>
@@ -211,7 +215,7 @@
                                         class="flex-1 px-3 py-2 bg-[#2ECC71] hover:bg-[#00ae56] text-white rounded-lg font-medium transition text-center text-sm">
                                         View Details
                                     </a>
-                                    @if ($project->owner_id === Auth::id())
+                                    @if ($project->host_id === Auth::id())
                                         <a href="{{ route('user.project.edit', $project) }}"
                                             class="px-3 py-2 bg-[#3498DB] hover:bg-[#5DADE2] text-white rounded-lg font-medium transition text-sm">
                                             Edit

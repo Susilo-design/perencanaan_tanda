@@ -13,6 +13,9 @@
                 <a href="{{ route('admin.trash') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                     <i class="fa-solid fa-trash"></i> Recycle Bin
                 </a>
+                <a href="{{ route('export') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                     Export
+                </a>
             </div>
         </div>
 

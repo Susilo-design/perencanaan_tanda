@@ -24,6 +24,9 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login.view')->middleware('guest');
 
+Route::get('/export', [AdminController::class, 'exportExcel'])->name('export');
+
+
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 

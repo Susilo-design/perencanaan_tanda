@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
 
 class AdminController extends Controller
 {
@@ -89,5 +91,12 @@ class AdminController extends Controller
     {
         $users = User::onlyTrashed()->get();
         return view('admin.trash', compact('users'));
+    }
+    
+
+    public function exportExcel()
+    {
+        $filename = 'data-pengguna.xlsx';
+        return Excel::download(new UsersExport, $filename);
     }
 }

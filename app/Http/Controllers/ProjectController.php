@@ -94,8 +94,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        if ($project->owner_id !== Auth::id()) {
-            abort(403, 'Hanya owner yang bisa edit project');
+        if ($project->host_id !== Auth::id()) {
+            abort(403, 'Hanya host yang bisa edit project');
         }
 
         return view('user.project.edit', compact('project'));
@@ -106,8 +106,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        if ($project->owner_id !== Auth::id()) {
-            abort(403, 'Hanya owner yang bisa update project');
+        if ($project->host_id !== Auth::id()) {
+            abort(403, 'Hanya host yang bisa update project');
         }
 
         if ($request->has('status') && $request->status === 'completed') {
@@ -120,6 +120,8 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'start_date'  => 'nullable|date',
             'end_date'    => 'nullable|date|after_or_equal:start_date',
+            'priority'    => 'nullable|in:low,medium,high,urgent',
+            'status'      => 'nullable|in:planning,active,on_hold,completed',
         ]);
 
         $project->update([
@@ -127,6 +129,8 @@ class ProjectController extends Controller
             'description' => $request->description,
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
+            'priority'    => $request->priority,
+            'status'      => $request->status,
         ]);
 
         return redirect()->route('user.project.show', $project)->with('success', 'Project berhasil diupdate.');
@@ -137,12 +141,12 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        if ($project->owner_id !== Auth::id()) {
-            abort(403, 'Hanya owner yang bisa menghapus project');
+        if ($project->host_id !== Auth::id()) {
+            abort(403, 'Hanya host yang bisa menghapus project');
         }
 
         $project->delete();
-        return redirect()->route('projects.index')->with('success', 'Project berhasil dihapus.');
+        return redirect()->route('user.dashboard')->with('success', 'Project berhasil dihapus.');
     }
 
     /**
