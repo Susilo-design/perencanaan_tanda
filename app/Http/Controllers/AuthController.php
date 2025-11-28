@@ -50,7 +50,7 @@ class AuthController extends Controller
         return redirect()->route('user.profile')->with('success', 'Profile berhasil diupdate');
     }
 
-    // Register User
+ 
     public function register(Request $request)
     {
         $request->validate([
@@ -65,7 +65,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // langsung login setelah register
+      
         Auth::login($user);
 
         return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil!');

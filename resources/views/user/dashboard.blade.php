@@ -1,9 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-    <!-- ========== KONTEN UTAMA ========== -->
     <main class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Sambutan -->
         <div class="flex justify-between items-center   ">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-white mb-2">Halo, <span
@@ -14,22 +12,20 @@
                 <a class="group relative inline-block text-sm font-medium text-black focus:ring-3 focus:outline-hidden"
                     href="{{ route('user.project.create') }}">
                     <span
-                        class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                        class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-white transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
 
-                    <span class="relative block border border-current bg-white px-8 py-3"> Create Project </span>
+                    <span class="relative block border border-current bg-green-800 px-8 text-white py-3"> Create Project </span>
                 </a>
                 <a href="{{ route('user.joinForm') }}"
                     class="group relative inline-block text-sm font-medium text-black focus:ring-3 focus:outline-hidden">
                     <span
-                        class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-blue-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-                    <span class="relative block border border-current bg-white px-8 py-3"> Join Project </span>
+                        class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-white  transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
+                    <span class="relative block border border-current  bg-green-800 text-white px-8 py-3"> Join Project </span>
                 </a>
             </div>
         </div>
 
-        <!-- Quick Stats (dynamic) -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <!-- Card 1 -->
             <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#2ECC71] transition">
                 <div class="flex items-center justify-between">
                     <div>
@@ -45,7 +41,6 @@
                 </div>
             </div>
 
-            <!-- Card 2 -->
             <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#3498DB] transition">
                 <div class="flex items-center justify-between">
                     <div>
@@ -62,7 +57,6 @@
                 </div>
             </div>
 
-            <!-- Card 3 -->
             <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#00ae56] transition">
                 <div class="flex items-center justify-between">
                     <div>
@@ -97,7 +91,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dark Theme Card -->
             @foreach ($projects as $project)
                 <div class="max-w-sm mx-auto mt-10">
                     <div class="rounded-xl shadow-2xl overflow-hidden bg-[#1A1E21] text-[#FFFFFF] border border-[#292d30]">
@@ -126,11 +119,9 @@
                                 </div>
                             </div>
 
-                            <!-- Divider -->
                             <div class="border-t border-[#414548] my-3">
                             </div>
 
-                            <!-- Priority & Status Row -->
                             <div class="grid grid-cols-2 gap-4 text-sm">
                                 
                                 <div>
@@ -150,7 +141,6 @@
                             </div>
                         </div>
 
-                        <!-- Footer Action -->
                         <div class="px-6 py-4 bg-[#292d30] border-t border-[#414548]">
                             <a href="{{ route('user.project.show', $project->id) }}"
                                 class="w-full py-2 px-4 rounded-lg text-sm font-medium bg-[#00ae56] hover:bg-[#2ECC71] text-white transition-colors duration-200">

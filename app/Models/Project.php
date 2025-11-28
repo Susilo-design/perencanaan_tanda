@@ -16,7 +16,7 @@ class Project extends Model
         'start_date',
         'end_date',
         'join_code',
-        'status',
+        'status',   
     ];
 
     // Relasi: project dimiliki oleh 1 user (host)
@@ -25,7 +25,7 @@ class Project extends Model
         return $this->belongsTo(User::class, 'host_id');
     }
 
-    // Alias for backward compatibility
+    // ganti nama jadi host 
     public function owner()
     {
         return $this->host();

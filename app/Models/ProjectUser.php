@@ -14,19 +14,19 @@ class ProjectUser extends Model
     protected $fillable = [
         'user_id',
         'project_id',
-        'role_in_project', // Role pengguna dalam proyek (misalnya 'member' untuk kolaborasi)
-        'joined_at', // Timestamp kapan pengguna bergabung ke proyek
+        'role_in_project', // Role pengguna user di project
+        'joined_at', // Nandain kapan user itu join ke project
     ];
 
     public $timestamps = false; // Tidak menggunakan created_at/updated_at default karena sudah ada joined_at
 
-    // Relasi: ProjectUser belongs to User (pengguna yang bergabung)
+    // ngehubungin ke tabel user buat join ke project
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relasi: ProjectUser belongs to Project (proyek yang diikuti)
+    // relasi ke project
     public function project()
     {
         return $this->belongsTo(Project::class);

@@ -50,7 +50,7 @@
                 </div>
 
                 <!-- Priority -->
-                <div>
+                {{-- <div>
                     <label for="priority" class="block text-sm font-medium text-white mb-2">Prioritas *</label>
                     <select name="priority" id="priority" required
                         class="w-full px-4 py-3 bg-[#414548] text-white rounded-lg border-2 border-transparent focus:border-[#2ECC71] focus:bg-[#292d30] focus:outline-none transition">
@@ -60,7 +60,7 @@
                         <option value="high">Tinggi</option>
                         <option value=x "urgent">Segera</option>
                     </select>
-                </div>
+                </div> --}}
 
                 <!-- Status -->
                 <div>
@@ -68,11 +68,9 @@
                     <select name="status" id="status" required
                         class="w-full px-4 py-3 bg-[#414548] text-white rounded-lg border-2 border-transparent focus:border-[#2ECC71] focus:bg-[#292d30] focus:outline-none transition">
                         <option value="">Pilih Status</option>
-                        <option value="planning">Perencanaan</option>
                         <option value="active">Aktif</option>
-                        <option value="on_hold">Tertunda</option>
                         <option value="completed">Selesai</option>
-                    </select>
+                    </select>   
                 </div>
 
                 <!-- Join Code (Auto Generated) -->

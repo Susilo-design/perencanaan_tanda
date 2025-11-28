@@ -51,6 +51,7 @@ class ProjectController extends Controller
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
             'join_code'   => strtoupper(Str::random(8)),
+            'status' =>  $request->status,
         ]);
 
         $project->save();
@@ -61,14 +62,12 @@ class ProjectController extends Controller
             'joined_at' => now(),
         ]);
 
-        // Create default schedule based on project dates
         if ($request->start_date && $request->end_date) {
             $project->schedules()->create([
                 'title' => 'Project Timeline',
                 'description' => 'Default schedule for project timeline',
                 'start_time' => $request->start_date . ' 09:00:00',
                 'end_time' => $request->end_date . ' 17:00:00',
-                'priority' => 'medium',
             ]);
         }
 
