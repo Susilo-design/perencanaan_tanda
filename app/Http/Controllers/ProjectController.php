@@ -9,9 +9,7 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    /**
-     * Tampilkan semua project user yang login
-     */
+
     public function index()
     {
         $projects = Auth::user()->joinedProjects()->with('tasks')->get();
