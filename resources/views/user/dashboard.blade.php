@@ -26,20 +26,7 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#2ECC71] transition">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-400 text-sm">Project Aktif</p>
-                        <p class="text-2xl font-bold text-white mt-1">{{ $projects->count() }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-[#2ECC71]/20 rounded-lg grid place-items-center">
-                        <svg class="w-5 h-5 text-[#2ECC71]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#3498DB] transition">
                 <div class="flex items-center justify-between">

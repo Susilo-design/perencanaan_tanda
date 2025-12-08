@@ -12,6 +12,11 @@ class ScheduleController extends Controller
     {
         // Ambil semua project yang dimiliki atau diikuti user
         $user = auth()->user();
+
+        if (!$user) {
+            abort(401, 'Unauthorized');
+        }
+
         $projects = $user->projects()->with('schedules')->get();
         $joinedProjects = $user->joinedProjects()->with('schedules')->get();
 

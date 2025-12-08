@@ -134,7 +134,7 @@ class TaskController extends Controller
             $request->validate([
                 'title'       => 'required|string|max:255',
                 'description' => 'nullable|string',
-                'status'      => 'nullable|in:pending,in_progress,done',
+                'status'      => 'nullable|in:todo,in_progress,done',
                 'priority'    => 'nullable|in:low,medium,high',
                 'due_date'    => 'nullable|date',
                 'assigned_to' => 'nullable|exists:users,id',
@@ -165,8 +165,7 @@ class TaskController extends Controller
                 abort(403, 'Members can only mark their own tasks as done.');
             }
         } else {
-            // Hosts can toggle status
-            $task->status = $task->status === 'done' ? 'pending' : 'done';
+            $task->status = $task->status === 'done' ? 'todo' : 'done';
             $task->save();
         }
 

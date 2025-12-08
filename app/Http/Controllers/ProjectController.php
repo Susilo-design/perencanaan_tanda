@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class ProjectController extends Controller
 {
@@ -40,6 +42,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'start_date'  => 'nullable|date',
             'end_date'    => 'nullable|date|after_or_equal:start_date',
+            'status'      => 'nullable|in:on_progress,completed',
         ]);
 
         $project = new Project([
@@ -49,7 +52,7 @@ class ProjectController extends Controller
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
             'join_code'   => strtoupper(Str::random(8)),
-            'status' =>  $request->status,
+            'status'      => $request->input('status', 'on_progress'),
         ]);
 
         $project->save();
@@ -117,8 +120,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'start_date'  => 'nullable|date',
             'end_date'    => 'nullable|date|after_or_equal:start_date',
-            'priority'    => 'nullable|in:low,medium,high,urgent',
-            'status'      => 'nullable|in:planning,active,on_hold,completed',
+            'status'      => 'nullable|in:on_progress,completed',
         ]);
 
         $project->update([
@@ -126,7 +128,6 @@ class ProjectController extends Controller
             'description' => $request->description,
             'start_date'  => $request->start_date,
             'end_date'    => $request->end_date,
-            'priority'    => $request->priority,
             'status'      => $request->status,
         ]);
 
@@ -180,5 +181,31 @@ class ProjectController extends Controller
         ]);
 
         return redirect()->route('user.project.show', $project)->with('success', 'Berhasil join project.');
+    }
+
+    /**
+     * Export project sebagai PDF
+     */
+    public function exportPdf(Project $project)
+    {
+        // Pastikan user hanya bisa export project yang dia ikuti
+        if (!$project->users->contains(Auth::id())) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Load semua data yang dibutuhkan
+        $project->load(['tasks', 'users', 'schedules']);
+
+        $data = [
+            'project' => $project,
+            'tasks' => $project->tasks,
+            'users' => $project->users,
+            'schedules' => $project->schedules,
+        ];
+
+        $pdf = Pdf::loadView('user.project.export-pdf', $data);
+        $fileName = 'PROJECT_' . $project->id . '_' . now()->format('Y-m-d') . '.pdf';
+
+        return $pdf->download($fileName);
     }
 }

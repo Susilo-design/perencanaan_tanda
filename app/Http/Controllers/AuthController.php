@@ -32,7 +32,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'avatar' => 'nullable|mimes:jpg,jpeg,png,svg,webp|max:2048',
+            'avatar' => 'nullable|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $user = Auth::user();
@@ -40,7 +40,8 @@ class AuthController extends Controller
 
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $namaFile = uniqid() . "-avatar" . $avatar->getClientOriginalExtension();
+            $extension = strtolower($avatar->getClientOriginalExtension());
+            $namaFile = uniqid() . "-avatar." . $extension;
             $path = $avatar->storeAs("avatar", $namaFile, "public");
             $user->avatar = $path;
         }
@@ -50,7 +51,7 @@ class AuthController extends Controller
         return redirect()->route('user.profile')->with('success', 'Profile berhasil diupdate');
     }
 
- 
+
     public function register(Request $request)
     {
         $request->validate([
@@ -65,7 +66,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-      
+
         Auth::login($user);
 
         return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil!');

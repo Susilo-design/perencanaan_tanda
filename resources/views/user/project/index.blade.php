@@ -23,35 +23,43 @@
                                 ? 'bg-[#006a18] text-[#2ECC71] border-[#2ECC71]'
                                 : 'bg-[#7D6608] text-[#F7DC6F] border-[#F7DC6F]';
                     @endphp
-                    <span class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium {{ $statusClass }} border">
-                        {{ $statusLabel }}
-                    </span>
+                    <div class="flex flex-col gap-2">
+
+                        <span
+                            class="inline-block mt-2 px-3 py-1 rounded-full text-xs text-center font-medium {{ $statusClass }} border">
+                            {{ $statusLabel }}
+                        </span>
+                        <a href="{{ route('user.project.export.pdf', $project) }}"
+                            class="px-3 py-1.5 rounded-lg text-sm bg-[#006a18] hover:bg-[#00ae56] transition text-white text-center">
+                            Download PDF
+                        </a>
+                    </div>
                 </div>
 
 
-                    <!-- Meta row -->
-                    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div>
-                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Start</h3>
-                            <p class="text-white mt-1">
-                                {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : 'Not set' }}
-                            </p>
-                        </div>
-                        <div>
-                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Deadline</h3>
-                            <p class="text-white mt-1">
-                                {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : 'Not set' }}
-                            </p>
-                        </div>
-                        <div>
-                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Join Code</h3>
-                            <p class="text-white mt-1 font-mono">{{ $project->join_code }}</p>
-                        </div>
-                        <div>
-                            <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Owner</h3>
-                            <p class="text-white mt-1">{{ $project->owner->name }}</p>
-                        </div>
+                <!-- Meta row -->
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div>
+                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Start</h3>
+                        <p class="text-white mt-1">
+                            {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : 'Not set' }}
+                        </p>
                     </div>
+                    <div>
+                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Deadline</h3>
+                        <p class="text-white mt-1">
+                            {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : 'Not set' }}
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Join Code</h3>
+                        <p class="text-white mt-1 font-mono">{{ $project->join_code }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-[#3498DB] text-xs uppercase tracking-wide">Owner</h3>
+                        <p class="text-white mt-1">{{ $project->host->name }}</p>
+                    </div>
+                </div>
             </section>
 
 

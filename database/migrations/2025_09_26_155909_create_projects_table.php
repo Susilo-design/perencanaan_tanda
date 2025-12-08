@@ -10,20 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-{
-    Schema::create('projects', function (Blueprint $table) {
-        $table->id();
-        $table->unsignedBigInteger('owner_id'); 
-        $table->string('title');
-        $table->text('description')->nullable();
-        $table->date('start_date')->nullable();
-        $table->date('end_date')->nullable();
-        $table->string('join_code')->unique();
-        $table->timestamps();
+    {
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('host_id');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('join_code')->unique();
+            $table->timestamps();
 
-        $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
-    });
-}
+            $table->foreign('host_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
 
 
     /**

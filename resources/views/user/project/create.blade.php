@@ -68,7 +68,7 @@
                     <select name="status" id="status" required
                         class="w-full px-4 py-3 bg-[#414548] text-white rounded-lg border-2 border-transparent focus:border-[#2ECC71] focus:bg-[#292d30] focus:outline-none transition">
                         <option value="">Pilih Status</option>
-                        <option value="active">Aktif</option>
+                        <option value="on_progress">Aktif</option>
                         <option value="completed">Selesai</option>
                     </select>   
                 </div>
@@ -89,10 +89,7 @@
 
                 <!-- Action Buttons -->
                 <div class="flex justify-end space-x-4 pt-6">
-                    <a href="/home"
-                        class="px-6 py-3 bg-[#414548] hover:bg-[#292d30] text-gray-300 rounded-lg font-medium transition">
-                        Batal
-                    </a>
+                    
                     <button type="submit"
                         class="px-6 py-3 bg-gradient-to-r from-[#2ECC71] to-[#00ae56] hover:from-[#00ae56] hover:to-[#006a18] text-white rounded-lg font-medium transition">
                         Buat Project

@@ -54,10 +54,12 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
         Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('edit');
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
+        Route::get('/{project}/export/pdf', [ProjectController::class, 'exportPdf'])->name('export.pdf');
 
 
 
-        // Task routes nested under project
+
+
         Route::prefix('{project}/tasks')->name('tasks.')->group(function () {
             Route::get('/', [TaskController::class, 'index'])->name('index');
             Route::get('/create', [TaskController::class, 'create'])->name('create');

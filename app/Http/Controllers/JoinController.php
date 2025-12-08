@@ -42,7 +42,7 @@ class JoinController extends Controller
             'joined_at' => now(),
         ]);
 
-        // Alihkan ke dashboard dengan pesan sukses setelah bergabung berhasil
+        // Alihkan ke dashboard dengan pesan sukses setelah bergabung berhasil  
         return redirect()->route('user.dashboard')->with('success', 'Berhasil join project.');
     }
 }

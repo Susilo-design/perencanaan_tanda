@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class isAdmin
+class IsAdmin
 {
     /**
      * Handle an incoming request.
@@ -21,7 +21,6 @@ class isAdmin
         } else {
             //jika bukan admin, dikembalikan ke home
             return redirect()->route('login.view');
-
         }
     }
 }

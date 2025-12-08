@@ -34,7 +34,7 @@
                     <label for="status" class="block text-sm font-medium text-gray-300 mb-2">Status</label>
                     <select name="status" id="status"
                             class="w-full px-3 py-2 bg-[#1A1E21] border border-[#414548] rounded-lg text-white focus:border-[#3498DB] focus:outline-none">
-                        <option value="todo" {{ old('status') === 'todo' ? 'selected' : '' }}>To Do</option>
+                        <option value="pending" {{ old('status') === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="in_progress" {{ old('status') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
                         <option value="done" {{ old('status') === 'done' ? 'selected' : '' }}>Done</option>
                     </select>

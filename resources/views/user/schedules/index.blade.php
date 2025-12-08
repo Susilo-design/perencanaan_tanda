@@ -1,7 +1,6 @@
 @extends('layout.app')
 
 @push('styles')
-<!-- FullCalendar CSS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 @endpush
 
@@ -18,7 +17,7 @@
 @endsection
 
 @push('scripts')
-<!-- FullCalendar JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
 <script>

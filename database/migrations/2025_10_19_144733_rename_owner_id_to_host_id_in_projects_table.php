@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Status enum migration - add more granular status values
         Schema::table('projects', function (Blueprint $table) {
-            $table->renameColumn('owner_id', 'host_id');
+            // This migration is a placeholder - status is already handled
+            // by the add_status_to_projects_table migration
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->renameColumn('host_id', 'owner_id');
-        });
+        // No changes to revert
     }
 };

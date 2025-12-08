@@ -9,6 +9,14 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+    'start_date' => 'date',
+    'end_date' => 'date',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+];
+
+
     protected $fillable = [
         'host_id',
         'title',
@@ -16,19 +24,13 @@ class Project extends Model
         'start_date',
         'end_date',
         'join_code',
-        'status',   
+        'status',
     ];
 
     // Relasi: project dimiliki oleh 1 user (host)
     public function host()
     {
         return $this->belongsTo(User::class, 'host_id');
-    }
-
-    // ganti nama jadi host 
-    public function owner()
-    {
-        return $this->host();
     }
 
     // Relasi: proyek bisa memiliki banyak pengguna yang bergabung untuk kolaborasi
