@@ -14,64 +14,63 @@
                     <span
                         class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-white transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
 
-                    <span class="relative block border border-current bg-green-800 px-8 text-white py-3"> Create Project </span>
+                    <span class="relative block border border-current bg-green-800 px-8 text-white py-3"> Create Project
+                    </span>
                 </a>
                 <a href="{{ route('user.joinForm') }}"
                     class="group relative inline-block text-sm font-medium text-black focus:ring-3 focus:outline-hidden">
                     <span
                         class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-white  transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
-                    <span class="relative block border border-current  bg-green-800 text-white px-8 py-3"> Join Project </span>
+                    <span class="relative block border border-current  bg-green-800 text-white px-8 py-3"> Join Project
+                    </span>
                 </a>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
 
-            <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#3498DB] transition">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-400 text-sm">Total Tasks</p>
-                        <p class="text-2xl font-bold text-white mt-1">
-                            {{ $projects->sum(function ($project) {return $project->tasks->count();}) }}</p>
+            <div class="grid grid-cols-1 gap-y-6 ">
+                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#3498DB] transition">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Total Tasks</p>
+
+                            <p class="text-2xl font-bold text-white mt-1">
+                                {{ $projects->sum(function ($project) {return $project->tasks->count();}) }}</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#3498DB]/20 rounded-lg grid place-items-center">
+                            <svg class="w-5 h-5 text-[#3498DB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                     </div>
-                    <div class="w-10 h-10 bg-[#3498DB]/20 rounded-lg grid place-items-center">
-                        <svg class="w-5 h-5 text-[#3498DB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                </div>
+
+
+
+                <!-- Card 4 -->
+                <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#006a18] transition">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-400 text-sm">Total Project</p>
+                            <p class="text-2xl font-bold text-white mt-1">{{ $projects->count() }}</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#006a18]/20 rounded-lg grid place-items-center">
+                            <svg class="w-5 h-5 text-[#006a18]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#00ae56] transition">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-400 text-sm">Tasks Done</p>
-                        <p class="text-2xl font-bold text-white mt-1">
-                            {{ $projects->sum(function ($project) {return $project->tasks->where('status', 'done')->count();}) }}
-                        </p>
-                    </div>
-                    <div class="w-10 h-10 bg-[#00ae56]/20 rounded-lg grid place-items-center">
-                        <svg class="w-5 h-5 text-[#00ae56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="bg-[#292d30] p-5 rounded-xl border border-[#414548] hover:border-[#006a18] transition">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-400 text-sm">Total Project</p>
-                        <p class="text-2xl font-bold text-white mt-1">{{ $projects->count() }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-[#006a18]/20 rounded-lg grid place-items-center">
-                        <svg class="w-5 h-5 text-[#006a18]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+            <div class="">
+                <div class="bg-[#292d30] p-6 rounded-xl border border-[#414548]">
+                    <h3 class="text-white text-sm font-medium mb-3">Tasks by Status</h3>
+                    <div class="w-48 mx-auto h-48">
+                        <canvas id="tasksByStatusChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -110,7 +109,7 @@
                             </div>
 
                             <div class="grid grid-cols-2 gap-4 text-sm">
-                                
+
                                 <div>
                                     <h3 class="text-[#3498DB] font-semibold text-xs uppercase tracking-wide">Status</h3>
                                     @php
@@ -141,4 +140,55 @@
         </div>
 
     </main>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            (function() {
+                // Tasks by Status doughnut
+                const statusLabels = @json($statusLabels ?? []);
+                const statusData = @json($statusData ?? []);
+
+                const statusFriendlyMap = {
+                    'todo': 'To Do',
+                    'in_progress': 'In Progress',
+                    'done': 'Done'
+                };
+
+                const friendlyLabels = statusLabels.map(k => statusFriendlyMap[k] ?? k);
+
+                const ctx2 = document.getElementById('tasksByStatusChart');
+                if (ctx2) {
+                    window.__charts = window.__charts || {};
+                    if (window.__charts['tasksByStatusChart']) {
+                        try {
+                            window.__charts['tasksByStatusChart'].destroy();
+                        } catch (e) {}
+                    }
+
+                    window.__charts['tasksByStatusChart'] = new Chart(ctx2, {
+                        type: 'doughnut',
+                        data: {
+                            labels: friendlyLabels,
+                            datasets: [{
+                                data: statusData,
+                                backgroundColor: ['#F59E0B', '#60A5FA', '#34D399'],
+                                borderColor: ['#FFF', '#FFF', '#FFF'],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                }
+            })();
+        </script>
+    @endpush
 @endsection

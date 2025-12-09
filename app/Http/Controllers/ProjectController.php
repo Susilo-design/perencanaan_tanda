@@ -21,7 +21,20 @@ class ProjectController extends Controller
     public function dashboard()
     {
         $projects = Auth::user()->joinedProjects()->with('tasks')->get();
-        return view('user.dashboard', compact('projects'));
+        // Prepare status counts across all joined projects (for Tasks by Status chart)
+        $allTasks = $projects->flatMap(function ($p) {
+            return $p->tasks;
+        });
+
+        $statusCounts = $allTasks->groupBy('status')->map->count()->toArray();
+
+        // Ensure common statuses exist with zero fallback
+        $statusLabels = ['todo', 'in_progress', 'done'];
+        $statusData = array_map(function ($key) use ($statusCounts) {
+            return isset($statusCounts[$key]) ? $statusCounts[$key] : 0;
+        }, $statusLabels);
+
+        return view('user.dashboard', compact('projects', 'statusLabels', 'statusData'));
     }
 
     /**
