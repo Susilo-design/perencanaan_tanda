@@ -145,7 +145,6 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             (function() {
-                // Tasks by Status doughnut
                 const statusLabels = @json($statusLabels ?? []);
                 const statusData = @json($statusData ?? []);
 
