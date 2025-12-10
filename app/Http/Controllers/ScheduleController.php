@@ -10,7 +10,6 @@ class ScheduleController extends Controller
 {
     public function userSchedules()
     {
-        // Ambil semua project yang dimiliki atau diikuti user
         $user = auth()->user();
 
         if (!$user) {

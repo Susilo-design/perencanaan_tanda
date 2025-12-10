@@ -83,7 +83,6 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Redirect based on role
             if (Auth::user()->isAdmin()) {
                 return redirect()->route('admin.index')->with('success', 'Login sukses!');
             }
@@ -96,13 +95,9 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // Logout User
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
         return redirect('/login')->with('success', 'Logout sukses');
     }
 }

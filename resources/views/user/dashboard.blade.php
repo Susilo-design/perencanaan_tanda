@@ -2,7 +2,13 @@
 
 @section('content')
     <main class="max-w-7xl mx-auto px-4 py-8">
-        <div class="flex justify-between items-center   ">
+        @if (Session::get('success'))
+            <div class="alert alert-success w-100">
+                {{ Session::get('success') }}
+                <b>Selamat datang, {{ Auth::user()->name }}</b>
+            </div>
+        @endif
+        <div class="flex justify-between items-center">
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-white mb-2">Halo, <span
                         class="text-[#2ECC71]">{{ Auth::user()->name }}!</span></h1>
@@ -142,52 +148,51 @@
     </main>
 
     @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            (function() {
-                const statusLabels = @json($statusLabels ?? []);
-                const statusData = @json($statusData ?? []);
+            let statusLabels = null;
+            let statusData = null;
 
-                const statusFriendlyMap = {
-                    'todo': 'To Do',
-                    'in_progress': 'In Progress',
-                    'done': 'Done'
-                };
+            $(function() {
+                $.ajax({
+                    url: "{{ route('user.tasks.chart') }}",
+                    method: "GET",
+                    success: function(response) {
 
-                const friendlyLabels = statusLabels.map(k => statusFriendlyMap[k] ?? k);
-
-                const ctx2 = document.getElementById('tasksByStatusChart');
-                if (ctx2) {
-                    window.__charts = window.__charts || {};
-                    if (window.__charts['tasksByStatusChart']) {
-                        try {
-                            window.__charts['tasksByStatusChart'].destroy();
-                        } catch (e) {}
+                        statusLabels = response.labels;
+                        statusData = response.data;
+                        chartTasksStatus();
+                    },
+                    error: function() {
+                        alert('Gagal mengambil data chart tasks!');
                     }
+                });
+            });
 
-                    window.__charts['tasksByStatusChart'] = new Chart(ctx2, {
-                        type: 'doughnut',
-                        data: {
-                            labels: friendlyLabels,
-                            datasets: [{
-                                data: statusData,
-                                backgroundColor: ['#F59E0B', '#60A5FA', '#34D399'],
-                                borderColor: ['#FFF', '#FFF', '#FFF'],
-                                borderWidth: 2
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'bottom'
-                                }
+            const ctxTasks = document.getElementById('tasksByStatusChart');
+
+            function chartTasksStatus() {
+                new Chart(ctxTasks, {
+                    type: 'doughnut',
+                    data: {
+                        labels: statusLabels,
+                        datasets: [{
+                            data: statusData,
+                            backgroundColor: ['#F59E0B', '#60A5FA', '#34D399'],
+                            borderColor: ['#FFF', '#FFF', '#FFF'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
                             }
                         }
-                    });
-                }
-            })();
+                    }
+                });
+            }
         </script>
     @endpush
 @endsection

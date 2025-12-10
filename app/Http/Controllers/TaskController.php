@@ -9,6 +9,26 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function tasksChart()
+    {
+        $projects = Auth::user()->joinedProjects()->with('tasks')->get();
+
+        $allTasks = $projects->pluck('tasks')->flatten();
+
+        $data = [
+            $allTasks->where('status', 'pending')->count(),
+            $allTasks->where('status', 'in_progress')->count(),
+            $allTasks->where('status', 'done')->count()
+        ];
+
+        return response()->json([
+            'labels' => ['To Do', 'In Progress', 'Done'],
+            'data' => $data
+        ]);
+    }
+
+
+
     /**
      * List semua task dari project tertentu
      */
@@ -105,9 +125,7 @@ class TaskController extends Controller
 
         $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
 
-        if ($userRole === 'member') {
-            abort(403, 'Members cannot edit tasks.');
-        }
+    
 
         return view('tasks.edit', compact('project', 'task'));
     }
@@ -157,7 +175,6 @@ class TaskController extends Controller
         $userRole = $project->users()->where('user_id', Auth::id())->first()->pivot->role_in_project;
 
         if ($userRole === 'member') {
-            // Members can only mark as done
             if ($task->assigned_to === Auth::id() && $task->status !== 'done') {
                 $task->status = 'done';
                 $task->save();

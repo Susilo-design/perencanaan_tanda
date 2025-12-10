@@ -139,7 +139,7 @@
             @endforelse
         </div>
         <div class="section">
-            <div class="section-title">Team Members</div>
+            <div class="section-title">Team Members: </div>
             <div class="members-list">
                 @forelse ($users as $user)
                     @php

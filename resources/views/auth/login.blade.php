@@ -4,16 +4,13 @@
 @section('content')
     <section>
         <div class="flex justify-center items-center h-[100%] gap-5  ">
-            <!-- Left image -->
             <div class="mx-auto w-[100%] basis-210 h-full bg-[#1A1E21] text-[#e0e0e0]">
                 <img class="w-[100%] h-[100%] object-cover" src="{{ asset('images/Logo No B.png') }}" alt="">
             </div>
 
-            <!-- Right form -->
             <div class=" basis-140 h-[100dvh] bg-[#1A1E21] text-[#e0e0e0]">
                 <div class="min-h-screen flex flex-col">
 
-                    <!-- Header with back arrow -->
                     <div class="px-4 py-3">
                         <a href="{{ url()->previous() }}" class="inline-flex items-center">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,18 +20,14 @@
                         </a>
                     </div>
 
-                    <!-- Main content -->
                     <div class="flex-1 bg-[#1A1E21] text-[#e0e0e0]  px-6 py-12">
                         <div class="max-w-md mx-auto">
-                            <!-- Login Title -->
                             <h1 class="text-3xl font-normal text-white text-center mb-12">
                                 Login
                             </h1>
 
-                            <!-- Login Form -->
                             <form method="POST" action="{{ route('login') }}" class="space-y-8">
                                 @csrf
-                                <!-- Email Field -->
                                 <div class="">
                                     <label for="email" class="block text-white text-base font-medium mb-3">
                                         Email
@@ -47,7 +40,6 @@
                                     @enderror
                                 </div>
 
-                                <!-- Password Field -->
                                 <div>
                                     <label for="password" class="block text-white text-base font-medium mb-3">
                                         Password
@@ -59,17 +51,6 @@
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
-
-
-                                <!-- reCAPTCHA -->
-                                <div class="mt-4">
-                                    <div class="">
-                                    </div>
-                                    @error('g-recaptcha-response')
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
 
                                 <!-- Login Button -->
                                 <div class="pt-8">

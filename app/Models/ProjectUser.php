@@ -18,9 +18,8 @@ class ProjectUser extends Model
         'joined_at', // Nandain kapan user itu join ke project
     ];
 
-    public $timestamps = false; // Tidak menggunakan created_at/updated_at default karena sudah ada joined_at
-
-    // ngehubungin ke tabel user buat join ke project
+    public $timestamps = false; 
+    
     public function user()
     {
         return $this->belongsTo(User::class);

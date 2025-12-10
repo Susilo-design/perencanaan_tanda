@@ -21,6 +21,12 @@ class Schedule extends Model
         'end_time' => 'datetime',
     ];
 
+
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, '');
+    // }
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -28,7 +34,7 @@ class Schedule extends Model
 
     public function getColorAttribute()
     {
-        return match($this->priority) {
+        return match ($this->priority) {
             'high' => '#EF4444', // red
             'medium' => '#F59E0B', // yellow
             'low' => '#10B981', // green

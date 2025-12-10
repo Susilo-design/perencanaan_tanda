@@ -32,6 +32,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard');
+    Route::get('/tasks/chart', [TaskController::class, 'tasksChart'])->name('tasks.chart');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
@@ -55,10 +56,6 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
         Route::get('/{project}/export/pdf', [ProjectController::class, 'exportPdf'])->name('export.pdf');
-
-
-
-
 
         Route::prefix('{project}/tasks')->name('tasks.')->group(function () {
             Route::get('/', [TaskController::class, 'index'])->name('index');
